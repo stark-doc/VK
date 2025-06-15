@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYSHAK T M | Product Designer & Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Import for Montserrat and Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom font for the name */
+        .name-font {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.05em;
+        }
+
+        /* Original Light Background Color */
+        .gradient-bg {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .profile-image {
+            border: 5px solid white;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 32px;
+            height: calc(100% - 32px);
+            width: 2px;
+            background: #e5e7eb; /* Light gray line */
+        }
+        
+        .hover-underline-animation {
+            display: inline-block;
+            position: relative;
+        }
+        
+        .hover-underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #3b82f6; /* Original blue underline */
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+        
+        .hover-underline-animation:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            color: #333; /* Ensure modal content is dark text on white background */
+        }
+        .modal-content h3 {
+            color: #333;
+        }
+        .modal-content p {
+            color: #555;
+        }
+        .modal-content .text-green-600 {
+            color: #16a34a;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-close-button:hover,
+        .modal-close-button:focus {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-2xl font-bold text-gray-800 name-font">VYSHAK T M</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium hover-underline-animation">About</a>
+                        <a href="#experience" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium hover-underline-animation">Experience</a>
+                        <a href="#achievements" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium hover-underline-animation">Achievements</a>
+                        <a href="#projects" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium hover-underline-animation">Projects</a>
+                        <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition duration-300">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="mobile-menu-button p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">About</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Experience</a>
+                <a href="#achievements" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Achievements</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Projects</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/2 mb-12 md:mb-0 animate-fade-in" style="animation-delay: 0.1s;">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight mb-4">
+                    Innovating for a <span class="text-blue-600">Connected</span> Future
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    Innovative Electronics Engineering student passionate about Product Design, Management, and cutting-edge systems.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium transition duration-300">
+                        Connect with Me
+                    </a>
+                    <a href="#experience" class="border border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-6 py-3 rounded-md font-medium transition duration-300">
+                        View Experience
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center animate-fade-in" style="animation-delay: 0.3s;">
+                <div class="relative">
+                    <img src="pic/main.jpg" 
+                         alt="Professional Headshot" 
+                         class="profile-image w-80 h-80 object-cover rounded-full">
+                    <div class="absolute -bottom-5 -right-5 bg-white p-4 rounded-lg shadow-lg">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                <i class="fas fa-lightbulb text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Recognized For</p>
+                                <p class="font-bold text-gray-800">Award-Winning Projects</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="stat-card bg-white p-6 rounded-xl shadow-md transition duration-300">
+                    <div class="text-blue-600 text-3xl font-bold mb-2">8.6</div>
+                    <div class="text-gray-600">CGPA (Current)</div>
+                    <div class="mt-4 text-sm text-gray-500">Bachelor of Engineering</div>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-md transition duration-300">
+                    <div class="text-blue-600 text-3xl font-bold mb-2">5+</div>
+                    <div class="text-gray-600">Major Projects</div>
+                    <div class="mt-4 text-sm text-gray-500">Developing cutting-edge solutions</div>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-md transition duration-300">
+                    <div class="text-blue-600 text-3xl font-bold mb-2">Top 1%</div>
+                    <div class="text-gray-600">Inventors Challenge</div>
+                    <div class="mt-4 text-sm text-gray-500">Among 2300+ teams nationally</div>
+                </div>
+                <div class="stat-card bg-white p-6 rounded-xl shadow-md transition duration-300">
+                    <div class="text-blue-600 text-3xl font-bold mb-2">2</div>
+                    <div class="text-gray-600">Published Papers</div>
+                    <div class="mt-4 text-sm text-gray-500">IEEE International Conferences</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Innovative Engineering & Product Design</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Merging technical expertise with creative problem-solving for efficient, user-focused products.
+            </p>
+        </div>
+        
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <img src="pic/main2.jpg" 
+                     alt="Team Meeting" 
+                     class="rounded-xl shadow-xl w-full">
+            </div>
+            <div class="md:w-1/2">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">About VYSHAK T M</h3>
+                <p class="text-gray-600 mb-6">
+                    As an innovative Electronics Engineering student with strong communication, leadership, and project management skills, 
+                    I aim to leverage my technical expertise and passion for Product designing and managing cutting-edge systems.
+                </p>
+                <p class="text-gray-600 mb-6">
+                    With a dedication to continuous learning and the integration of the latest technologies, I am committed to creating 
+                    efficient, user-focused products. By combining my strengths in product design, management, and project execution, 
+                    I seek to contribute effectively to a dynamic team and drive organizational success.
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </div>
+                        <span class="text-gray-700">BNMIT Student</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </div>
+                        <span class="text-gray-700">Hackathon Finalist</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </div>
+                        <span class="text-gray-700">Club Founder & Advisor</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                            <i class="fas fa-check text-blue-600"></i>
+                        </div>
+                        <span class="text-gray-700">Published Researcher</span>
+                    </div>
+                </div>
+                <a href="https://www.linkedin.com/in/vyshaktm180903" target="_blank" class="inline-flex items-center text-blue-600 font-medium hover-underline-animation">
+                    View LinkedIn Profile
+                    <i class="fas fa-external-link-alt ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Internships & Hands-on Experience</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Practical experience and learning through diverse engineering and development roles.
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-code text-xl"></i>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-gray-800">Intern as Backend Developer and Interfacing</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Oct 2023 - Nov 2023</span>
+                            </div>
+                            <div class="text-blue-600 font-medium mb-3">Senquire</div>
+                            <p class="text-gray-600 mb-4">
+                                Contributed to the Camera Traffic Generator project, integrating various camera types onto a single platform. 
+                                Developed solutions for live feed acquisition and recording using React framework in a Linux environment.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">ReactJS</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Linux</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Backend Development</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-wifi text-xl"></i>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-gray-800">Emerging Wireless Technologies Workshop</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">NIT Kurukshetra</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Explored cutting-edge topics including wearable sensors and networks, 5G technologies, LoRa, 
+                                IoT, and wireless communications.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">IoT</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">5G</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Wireless Comms</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item relative pl-16">
+                        <div class="absolute left-0 top-0 flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-gray-800">Robotics Virtual Internship</h3>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Kodacy</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Gained foundational knowledge in robotics, applying theoretical concepts to practical projects, 
+                                virtual simulations, and Arduino code development.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Robotics</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Arduino</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Simulations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Notable Achievements & Leadership</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Key contributions and leadership roles demonstrating impact and skill.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Achievement 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Inventors Challenge 2024 Finalist</h3>
+                    <p class="text-gray-600 mb-4">
+                        Secured a position among the top 24 teams nationally out of over 2300+ participants, 
+                        showcasing strong project management and innovation skills.
+                    </p>
+                    <div class="text-sm text-gray-500">AICTE and STM</div>
+                </div>
+                
+                <!-- Achievement 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Recursive National Level Hackathon Runner-up</h3>
+                    <p class="text-gray-600 mb-4">
+                        Awarded for developing an Intelligent Parking Management System under the Smart City theme, 
+                        demonstrating problem-solving and technical prowess.
+                    </p>
+                    <div class="text-sm text-gray-500">Dayananda Sagar College of Engineering</div>
+                </div>
+                
+                <!-- Achievement 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Founding Vice Chair - Nexus Community</h3>
+                    <p class="text-gray-600 mb-4">
+                        Co-founded one of the most prominent technical clubs at BNMIT, responsible for social media management, 
+                        marketing, and structuring events.
+                    </p>
+                    <div class="text-sm text-gray-500">BNMIT</div>
+                </div>
+                
+                <!-- Achievement 4 -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Founding Chair & Advisor - Bloom Wellness Club</h3>
+                    <p class="text-gray-600 mb-4">
+                        Established and currently advises the Bloom Wellness Club, overseeing and managing its overall operations 
+                        and activities.
+                    </p>
+                    <div class="text-sm text-gray-500">BNMIT</div>
+                </div>
+                
+                <!-- Achievement 5 -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Manthan 2024 Finalist</h3>
+                    <p class="text-gray-600 mb-4">
+                        Recognized as a finalist in a business idea presentation competition, highlighting entrepreneurial acumen 
+                        and strategic thinking.
+                    </p>
+                    <div class="text-sm text-gray-500">FKCCI</div>
+                </div>
+                
+                <!-- Achievement 6: Published Research Papers -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Published Research Papers</h3>
+                    <p class="text-gray-600 mb-4">
+                        Authored and co-authored two papers: "Hive Destruction Protocol" and "Real-Time Global Parcel Tracking System".
+                    </p>
+                    <div class="flex flex-col space-y-2">
+                        <a href="https://doi.org/10.1109/IITCEE64140.2025.10915384" target="_blank" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                            View Paper 1 (Hive Destruction Protocol)
+                        </a>
+                        <a href="https://doi.org/10.1109/IITCEE64140.2025.10915357" target="_blank" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                            View Paper 2 (Real-Time Global Parcel Tracking System)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Key Projects</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Showcasing my technical expertise and problem-solving skills through impactful projects.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1: Student Data Base Management System -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Student Data Base Management System</h3>
+                    <p class="text-gray-600 mb-4">
+                        Constructed a dynamic DBMS for college management, integrated with MySQL and a Python frontend. 
+                        Tracks admissions, fees, placements, and academic records.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Python</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">MySQL</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">DBMS</span>
+                    </div>
+                    <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                        View Project
+                    </a>
+                </div>
+
+                <!-- Project 2: Intelligent Parking Management System (IPMS) -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Intelligent Parking Management System (IPMS)</h3>
+                    <p class="text-gray-600 mb-4">
+                        Developed a web-based platform with React, Python, and ML for real-time parking availability. 
+                        Addresses traffic congestion, reduces carbon footprints. Advanced implementation on STM32H747I-DISCO.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">React</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Python</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Machine Learning</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">STM32H747I-DISCO</span>
+                    </div>
+                    <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                        View Project
+                    </a>
+                </div>
+
+                <!-- Project 3: Real time global parcel tracking system -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-truck-fast"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Real-time Global Parcel Tracking System</h3>
+                    <p class="text-gray-600 mb-4">
+                        Built an end-to-end real-time parcel tracking system with live location adaptation for the supply chain ecosystem. 
+                        Resolves a major gap in the market.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Supply Chain</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Real-time Tracking</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Logistics</span>
+                    </div>
+                    <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                        View Project
+                    </a>
+                </div>
+
+                <!-- Project 4: Apex Axis -->
+                <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Apex Axis</h3>
+                    <p class="text-gray-600 mb-4">
+                        Developed a platform using React and Firebase to connect social impact initiatives with potential investors. 
+                        Fosters a cooperative atmosphere encouraging sustainability.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">React</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Firebase</span>
+                        <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">Social Impact</span>
+                    </div>
+                    <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 text-sm">
+                        View Project
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-blue-600 text-white p-12">
+                        <h2 class="text-3xl font-bold mb-6">Get In Touch</h2>
+                        <p class="mb-8 text-blue-100">
+                            Interested in collaborating on a project, seeking a team member, or discussing future opportunities? 
+                            Feel free to reach out.
+                        </p>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i class="fas fa-envelope text-blue-200"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-blue-200">Email</p>
+                                    <p class="text-white">vyshakmanju1809@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i class="fas fa-phone-alt text-blue-200"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-blue-200">Phone</p>
+                                    <p class="text-white">+91 8296247929</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <i class="fas fa-map-marker-alt text-blue-200"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-blue-200">Location</p>
+                                    <p class="text-white">Bengaluru, Karnataka, India</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-12 flex space-x-4">
+                            <a href="https://www.linkedin.com/in/vyshaktm180903" target="_blank" class="bg-white text-blue-600 p-3 rounded-full hover:bg-blue-50 transition duration-300">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" target="_blank" class="bg-white text-blue-600 p-3 rounded-full hover:bg-blue-50 transition duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" target="_blank" class="bg-white text-blue-600 p-3 rounded-full hover:bg-blue-50 transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" target="_blank" class="bg-white text-blue-600 p-3 rounded-full hover:bg-blue-50 transition duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <!-- Add other social media links as needed -->
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-12">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Send a Message</h3>
+                        <form id="contactForm" action="YOUR_FORMSPREE_ENDPOINT_HERE" method="POST">
+                            <div class="grid grid-cols-1 gap-6">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                    <input type="email" id="email" name="_replyto" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                                </div>
+                                <div>
+                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">Organization (Optional)</label>
+                                    <input type="text" id="company" name="company" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                                    <select id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                                        <option value="">Select a subject</option>
+                                        <option value="Collaboration Opportunity">Collaboration Opportunity</option>
+                                        <option value="Internship/Job Inquiry">Internship/Job Inquiry</option>
+                                        <option value="Project Discussion">Project Discussion</option>
+                                        <option value="Other Inquiry">Other Inquiry</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                                </div>
+                                <div>
+                                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300">
+                                        Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-bold name-font">VYSHAK T M</span>
+                    <p class="text-gray-400 mt-2">Product Designer & Management Student</p>
+                </div>
+                <div class="flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
+                    <a href="#about" class="text-gray-300 hover:text-white">About</a>
+                    <a href="#experience" class="text-gray-300 hover:text-white">Experience</a>
+                    <a href="#achievements" class="text-gray-300 hover:text-white">Achievements</a>
+                    <a href="#projects" class="text-gray-300 hover:text-white">Projects</a>
+                    <a href="#contact" class="text-gray-300 hover:text-white">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2024 VYSHAK T M. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="https://www.linkedin.com/in/vyshaktm180903" target="_blank" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <!-- Add other social media links as needed -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-button">×</span>
+            <div class="text-green-600 text-5xl mb-4">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-3">Message Sent!</h3>
+            <p class="text-gray-600 mb-4">Thank you for your message. I will get in touch with you soon.</p>
+            <button class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300" onclick="document.getElementById('successModal').classList.add('hidden');">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-fade-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll); // Trigger on load for elements already in view
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const successModal = document.getElementById('successModal');
+        const closeModalButton = document.querySelector('.modal-close-button');
+
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const form = event.target;
+            const formData = new FormData(form);
+            const formUrl = form.action;
+
+            if (formUrl === "YOUR_FORMSPREE_ENDPOINT_HERE") {
+                alert("Please replace 'YOUR_FORMSPREE_ENDPOINT_HERE' in the HTML with your actual Formspree endpoint to enable form submission. See formspree.io for details.");
+                return;
+            }
+
+            try {
+                const response = await fetch(formUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json' // Essential for Formspree AJAX response
+                    }
+                });
+
+                if (response.ok) {
+                    successModal.classList.remove('hidden'); // Show modal on success
+                    form.reset(); // Clear the form
+                } else {
+                    const data = await response.json();
+                    if (Object.hasOwnProperty.call(data, 'errors')) {
+                        alert(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        alert('Oops! There was a problem submitting your form. Please try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Oops! There was a network error. Please check your internet connection and try again.');
+            }
+        });
+
+        // Close modal functionality
+        closeModalButton.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+        });
+
+        // Close modal if user clicks outside of it
+        window.addEventListener('click', (event) => {
+            if (event.target == successModal) {
+                successModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
